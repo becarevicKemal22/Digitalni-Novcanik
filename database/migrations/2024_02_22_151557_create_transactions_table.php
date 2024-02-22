@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string("naziv");
-
+            $table->string("Test");
             $table->timestamps();
         });
     }
