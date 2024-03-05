@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-
-            $table->string("naziv");
-
+            $table->string('id')->primary();
+            $table->string('name');
+            $table->string('userID');
+            $table->double('amount');
+            $table->string('category');
+            $table->string('repetition_interval');
+            $table->date('date');
+            $table->boolean('inflow');
             $table->timestamps();
         });
     }
