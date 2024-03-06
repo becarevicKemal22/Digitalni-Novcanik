@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-
-            $table->string("naziv");
-
+            $table->string('name');
+            $table->string('user_id');
+            $table->double('amount');
+            $table->unsignedBigInteger('category_id');
+            $table->enum('repetition_interval', ['daily, monthly, yearly']);
+            $table->date('date');
+            $table->boolean('inflow');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
