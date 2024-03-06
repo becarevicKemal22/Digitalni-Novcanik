@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
             $table->string('name');
-            $table->string('userID');
+            $table->string('user_id');
             $table->double('amount');
-            $table->string('category');
-            $table->string('repetition_interval');
+            $table->unsignedBigInteger('category_id');
+            $table->enum('repetition_interval', ['daily, monthly, yearly']);
             $table->date('date');
             $table->boolean('inflow');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

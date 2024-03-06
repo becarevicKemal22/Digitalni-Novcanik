@@ -15,10 +15,10 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('name');
             $table->string('surname');
-            $table->string('username');
+            $table->string('username')->unique();
             $table->date('birthday');
             $table->string('email')->unique();
-            $table->double('budget_status');
+            $table->double('balance');
             $table->timestamps();
         });
     }

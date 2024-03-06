@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('ime');
-            $table->string('boja');
-            $table->timestamps();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('transactions', function (Blueprint $table) {
+            //
+        });
     }
 };
