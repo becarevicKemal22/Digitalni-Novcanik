@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,7 +15,17 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+
         },
+
+        colors: {
+            ...colors,
+            'accent': '#7555D3', // ljubicasta
+            'normal': '#E1DDEE', // sivkasto bijela
+            'background': '#211C28', // tamna za pozadinu
+            'zelena': '#95F00', // zelena za prilive
+            'crvena': '#F94848', // crvena za odlive
+        }
     },
 
     plugins: [forms],
