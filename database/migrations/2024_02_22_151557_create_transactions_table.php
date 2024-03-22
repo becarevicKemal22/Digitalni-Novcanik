@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->double('amount');
             $table->unsignedBigInteger('category_id');
-            $table->enum('repetition_interval', ['daily, monthly, yearly']);
+            $table->enum('repetition_interval', ['Single', 'Daily', 'Monthly', 'Yearly']);
             $table->date('date');
             $table->boolean('inflow');
             $table->timestamps();

@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('transactions')" :active="request()->routeIs('transactions')">
+                        {{ __('Pregled transakcija') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('transaction.create')" :active="request()->routeIs('transaction.create')">
+                        {{ __('Dodaj Transakciju') }}
+                    </x-nav-link>
                 </div>
             </div>
 

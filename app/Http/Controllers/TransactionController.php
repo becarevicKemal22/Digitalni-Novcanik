@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -13,7 +15,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $transactions = $user->transactions()->get();
+        return view('transactions', ['transactions'=>$transactions]);
     }
 
     /**
@@ -31,7 +35,18 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        dd("Hello!");
+        $user_id = Auth::user()->id;
+        $transaction = Transaction::make([
+            "name" => $request->name,
+            "user_id" => $user_id,
+            "amount" => $request->amount,
+            "category_id" => $request->category,
+            "repetition_interval" => $request->interval,
+            "date" => $request->date,
+            "inflow" => $request->inflow == "inflow",
+        ]);
+        $transaction->save();
+        return redirect()->route('transactions');
     }
 
     /**

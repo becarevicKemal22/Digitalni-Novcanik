@@ -17,8 +17,8 @@
         <!-- Iznos -->
         <div class="mt-4">
             <x-input-label for="amount" :value="__('Iznos')"/>
-            <x-text-input id="amount" class="block mt-1 w-full text-background" type="text" amount="amount"
-                          :value="old('amount')" required autofocus autocomplete="amount" placeholder="npr. Plata"/>
+            <x-text-input id="amount" name="amount" class="block mt-1 w-full text-background" type="number" amount="amount"
+                          :value="old('amount')" required autofocus autocomplete="amount"/>
             <x-input-error :messages="$errors->get('amount')" class="mt-2"/>
         </div>
 
@@ -30,9 +30,36 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit"
-                class="inline-block rounded bg-primary text-accent px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-            REGISTRUJ SE
-        </button>
+
+        <div class="mt-4">
+            <label for="interval">Interval ponavljanja</label>
+            <select name="interval" id="interval">
+                <option value="Single">Jednokratna</option>
+                <option value="Daily">Dnevna</option>
+                <option value="Monthly">Mjesečna</option>
+                <option value="Yearly">Godišnja</option>
+            </select>
+        </div>
+
+        <div class="mt-4">
+            <label for="inflow">Tip transakcije</label>
+            <select name="inflow" id="inflow">
+                <option value="inflow">Priliv</option>
+                <option value="outflow">Odliv</option>
+            </select>
+        </div>
+        <div class="mt-4">
+            <label for="date">Datum</label>
+            <input type="date" name="date" id="date">
+        </div>
+        <x-primary-button>
+            Spremi
+        </x-primary-button>
+        <x-danger-button>
+            <a href="{{route('transactions')}}">
+                Otkaži
+            </a>
+        </x-danger-button>
+
     </form>
 </x-app-layout>

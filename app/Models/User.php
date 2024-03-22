@@ -11,6 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+    protected $keyType = 'uuid';
     /**
      * The attributes that are mass assignable.
      *
@@ -49,6 +52,6 @@ class User extends Authenticatable
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'userID');
+        return $this->hasMany(Transaction::class);
     }
 }
