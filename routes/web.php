@@ -19,7 +19,20 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $user = Auth::user();
+    $prilivi = $user->transactions()->where('inflow', "1")->get();
+    $prilivi_suma = 0;
+    foreach ($prilivi as $priliv){
+        $prilivi_suma += $priliv->amount;
+    }
+    $odlivi = $user->transactions()->where('inflow', "0")->get();
+    $odlivi_suma = 0;
+    foreach($odlivi as $odliv){
+        $odlivi_suma += $odliv->amount;
+    }
+
+    return view('dashboard', ["user" => $user, "prilivi" => $prilivi_suma, "odlivi" => $odlivi_suma]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -28,9 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(ImageController::class)->group(function(){
-    Route::get('/image-upload', 'index')->name('image.form');
-    Route::post('/upload-image', 'storeImage')->name('image.store');
+Route::controller(\App\Http\Controllers\TransactionController::class)->group(function(){
+    Route::get('/transactions', 'index')->name('transactions');
+    Route::get('/transaction-create', 'create')->name('transaction.create');
+    Route::post('/transaction-store', 'store')->name('transaction.store');
 });
 
 require __DIR__.'/auth.php';
