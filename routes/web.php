@@ -33,4 +33,9 @@ Route::controller(ImageController::class)->group(function(){
     Route::post('/upload-image', 'storeImage')->name('image.store');
 });
 
+Route::controller(\App\Http\Controllers\TransactionController::class)->group(function(){
+    Route::get('/transaction-create', 'create')->name('transaction.create');
+    Route::post('/transaction-store', 'store')->name('transaction.store');
+});
+
 require __DIR__.'/auth.php';
