@@ -23,7 +23,8 @@ export default {
             'accent': '#7555D3', // ljubicasta
             'normal': '#E1DDEE', // sivkasto bijela
             'background': '#211C28', // tamna za pozadinu
-            'zelena': '#95F00', // zelena za prilive
+            'siva': '#37313F',
+            'zelena': '#95F000', // zelena za prilive
             'crvena': '#F94848', // crvena za odlive
         }
     },
