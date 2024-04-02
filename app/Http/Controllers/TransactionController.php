@@ -16,7 +16,7 @@ class TransactionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $transactions = $user->transactions()->get();
+        $transactions = $user->transactions()->with('category')->orderBy('created_at', 'desc')->get();
         return view('transactions', ['transactions'=>$transactions]);
     }
 
