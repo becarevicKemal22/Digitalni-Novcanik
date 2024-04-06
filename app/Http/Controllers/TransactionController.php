@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +14,24 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $transactions = $user->transactions()->with('category')->orderBy('created_at', 'desc')->get();
-        return view('transactions', ['transactions'=>$transactions]);
+        $transactions = $user->transactions()->with('category');
+        if(request('category')){
+            $cat_id = $request->input('category');
+            if($cat_id != 0){
+                $transactions = $transactions->where('category_id', $cat_id);
+            }
+        }
+        if(request('date')){
+            $date = $request->input('date');
+            $transactions = $transactions->where('date', $date);
+        }
+        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+
+        $categories = Category::all();
+        return view('transactions', ['transactions'=>$transactions, 'categories' => $categories]);
     }
 
     /**
@@ -45,7 +59,15 @@ class TransactionController extends Controller
             "date" => $request->date,
             "inflow" => $request->inflow == "inflow",
         ]);
+        $user = User::where('id', $user_id)->first();
+        if($transaction->inflow){
+            $user->balance += $transaction->amount;
+        }else{
+            $user->balance -= $transaction->amount;
+        }
+        $user->save();
         $transaction->save();
+
         return redirect()->route('transactions');
     }
 

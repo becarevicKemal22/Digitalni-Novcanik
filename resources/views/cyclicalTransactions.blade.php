@@ -3,50 +3,17 @@
         <br>
         <h1 class="flex items-center justify-center whitespace-pre-line text-normal font-xl">digitalni novčanik</h1>
         <br>
-        <h1 class="text-5xl text-normal flex items-center justify-center font-xl">Transakcije</h1>
+        <h1 class="text-5xl text-normal flex items-center justify-center font-xl">Ciklične transakcije</h1>
         <br>
     </div>
     <br>
 
     <div class="w-1/3 mx-auto">
-        <div class="mb-6 flex flex-col justify-center items-center">
-            <h2 class="text-3xl text-gray-100">Filteri</h2>
-            <form action="">
-                <div class="flex flex-col gap-2 text-white">
-                    <div class="mt-4">
-                        <label for="date" class="text-white mr-3">Datum transakcije</label>
-                        <input class="text-background" type="date" name="date" id="date">
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <label for="category">Kategorija transakcije</label>
-                        <select class="text-background" name="category" id="category">
-                            <option value="0">Sve</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->ime}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="mt-4 flex justify-around gap-2">
-                    <x-primary-button class="justify-center">
-                        Traži
-                    </x-primary-button>
-                    <x-danger-button>
-                        <a class="" href="{{route('transactions')}}">
-                            Poništi
-                        </a>
-                    </x-danger-button>
-                </div>
-            </form>
-        </div>
         @foreach($transactions as $transaction)
             <div
                 class="mb-4 rounded-full px-10 py-4 flex-col min-w-full items-center bg-siva shadow-lg hover:bg-accent hover:normal">
                 <div class="flex justify-between">
-                    <div class="flex gap-4 items-center">
-                        <h3 class="text-normal group-hover:text-white text-2xl font-semibold">{{$transaction->name}}</h3>
-                        <h4 class="text-gray-300">{{$transaction->date}}</h4>
-                    </div>
+                    <h3 class="text-normal group-hover:text-white text-2xl font-semibold">{{$transaction->name}}</h3>
                     @if($transaction->inflow)
                         <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} BAM</p>
                     @else
@@ -61,7 +28,7 @@
         @endforeach
         @if(count($transactions) == 0)
             <div class="w-full flex justify-center">
-                <h2 class="text-white text-xl">Trenutno nemate spašenih transakcija</h2>
+                <h2 class="text-white text-xl">Trenutno nemate spašenih cikličnih transakcija</h2>
             </div>
         @endif
     </div>

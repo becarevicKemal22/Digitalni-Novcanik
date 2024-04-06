@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center whitespace-pre-line text-normal font-3xl">digitalni novčanik</h1>
     <br>
     <div class="text-5xl text-normal flex items-center justify-center ">
-        <h1>Napravi transakciju</h1>
+        <h1>Dodaj kategoriju</h1>
     </div>
     <br>
     <form method="POST" action="{{ route('transaction.store') }}">
@@ -30,11 +30,17 @@
 
                     <div class="mt-4 flex justify-between items-center">
                         <label for="category">Kategorija</label>
-                        <select class="text-background" name="category" id="category">
+                        <div class="flex gap-2 items-center">
+                            <a href="{{route("category.add")}}" class="w-8 h-8 flex items-center justify-center rounded-full bg-accent">
+                                <span class="text-xl">+</span>
+                            </a>
+                            <select class="text-background" name="category" id="category">
                             @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->ime}}</option>
-                            @endforeach
+                                    <option value="{{$category->id}}">{{$category->ime}}</option>
+                                @endforeach
                         </select>
+                        </div>
+
                     </div>
 
                     <div class="mt-4 flex justify-between items-center ">
@@ -56,7 +62,7 @@
                     </div>
                     <div class="mt-4 flex justify-between items-center">
                         <label for="date">Datum</label>
-                        <input class="text-background" type="date" name="date" id="date">
+                        <input class="text-background" type="date" name="date" id="date" value ="<?php echo date('Y-m-d') ?>">
                     </div>
                     <br>
                     <x-primary-button class="justify-center w-44">
