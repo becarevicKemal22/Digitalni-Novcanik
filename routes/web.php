@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,10 +42,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(\App\Http\Controllers\TransactionController::class)->group(function(){
+Route::controller(\App\Http\Controllers\TransactionController::class)->middleware('auth')->group(function(){
     Route::get('/transactions', 'index')->name('transactions');
     Route::get('/transaction-create', 'create')->name('transaction.create');
     Route::post('/transaction-store', 'store')->name('transaction.store');
 });
+
+Route::controller(\App\Http\Controllers\CyclicalTransactionController::class)->middleware('auth')->group(function(){
+    Route::get('/cyclical-transactions', 'index')->name('cyclicalTransactions');
+});
+
+Route::get('/add-category', function() {
+    return view('add-category');
+})->name('category.add');
+
+Route::post('/add-category', function(\Illuminate\Http\Request $request) {
+    \App\Models\Category::create([
+        "ime" => $request->name,
+        "boja" => $request->color,
+    ]);
+    return redirect()->route('transaction.create');
+})->name('category.save');
 
 require __DIR__.'/auth.php';

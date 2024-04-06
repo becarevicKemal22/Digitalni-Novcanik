@@ -24,7 +24,7 @@
 <br>
             <h1 class="text-normal text-opacity-75 text-xl font-light">Odlivi:</h1>
             <div class="relative">
-                <h1 class="text-crvena text-4xl ml-14">{{$odlivi}} BAM</h2>
+                <h1 class="text-crvena text-4xl ml-14">{{$odlivi}} BAM</h1>
             </div>
         </div>
     </div>

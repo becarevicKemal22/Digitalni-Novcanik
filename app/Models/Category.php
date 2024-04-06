@@ -9,7 +9,7 @@ class Category extends Model
 {
     protected $table = 'Categories';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'color'];
+    protected $fillable = ['ime', 'boja'];
 
     public function transactions()
     {
