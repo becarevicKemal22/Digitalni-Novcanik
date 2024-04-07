@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('transaction.create')" :active="request()->routeIs('transaction.create')">
                         {{ __('Dodaj Transakciju') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('conversions')" :active="request()->routeIs('conversions')">
+                        {{ __('Konverzije valuta') }}
+                    </x-nav-link>
                 </div>
             </div>
 

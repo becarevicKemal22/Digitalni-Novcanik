@@ -64,4 +64,11 @@ Route::post('/add-category', function(\Illuminate\Http\Request $request) {
     return redirect()->route('transaction.create');
 })->name('category.save');
 
+Route::middleware('auth')->get('/conversions', function() {
+
+    $balance = Auth::user()->balance;
+    return view('conversions', ["balance" => $balance]);
+
+})->name('conversions');
+
 require __DIR__.'/auth.php';
