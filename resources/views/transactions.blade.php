@@ -8,7 +8,7 @@
     </div>
     <br>
 
-    <div class="w-1/3 mx-auto">
+    <div class="w-1/2 xl:w-1/3 mx-auto">
         <div class="mb-6 flex flex-col justify-center items-center">
             <h2 class="text-3xl text-gray-100">Filteri</h2>
             <form action="">
@@ -41,16 +41,16 @@
         </div>
         @foreach($transactions as $transaction)
             <div
-                class="mb-4 rounded-full px-10 py-4 flex-col min-w-full items-center bg-siva shadow-lg hover:bg-accent hover:normal">
+                class="mb-4 cursor-default rounded-2xl px-10 py-4 flex-col min-w-full items-center bg-siva shadow-lg hover:bg-accent hover:normal">
                 <div class="flex justify-between">
                     <div class="flex gap-4 items-center">
                         <h3 class="text-normal group-hover:text-white text-2xl font-semibold">{{$transaction->name}}</h3>
                         <h4 class="text-gray-300">{{$transaction->date}}</h4>
                     </div>
                     @if($transaction->inflow)
-                        <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} BAM</p>
+                        <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} {{$currency}}</p>
                     @else
-                        <p class="text-crvena group-hover:text-background text-2xl">-{{$transaction->amount}} BAM</p>
+                        <p class="text-crvena group-hover:text-background text-2xl">-{{$transaction->amount}} {{$currency}}</p>
                     @endif
                 </div>
                 <div class="category mt-2 px-5 py-1.5 rounded-full max-w-fit"

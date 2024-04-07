@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('email')->unique();
             $table->double('balance')->default(0);
+            $table->string('currency', 3)->nullable();
             $table->timestamps();
         });
     }

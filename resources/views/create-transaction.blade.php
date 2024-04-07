@@ -8,7 +8,6 @@
     <br>
     <form method="POST" action="{{ route('transaction.store') }}">
         @csrf
-
             <div class="text-normal group flex justify-center rounded-full p-2">
                 <div>
                     <!-- Name -->
@@ -24,7 +23,7 @@
                         <x-input-label for="amount" :value="__('Iznos')"/>
                         <x-text-input id="amount" name="amount" class="block mt-1 w-96 text-background" type="number"
                                       amount="amount"
-                                      :value="old('amount')" required autofocus autocomplete="amount"/>
+                                      :value="old('amount')" required autofocus autocomplete="amount" min="0.00" step="1"/>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2"/>
                     </div>
 

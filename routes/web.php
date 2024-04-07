@@ -33,7 +33,9 @@ Route::get('/dashboard', function () {
         $odlivi_suma += $odliv->amount;
     }
 
-    return view('dashboard', ["user" => $user, "prilivi" => $prilivi_suma, "odlivi" => $odlivi_suma]);
+    $valuta = $user->currency;
+
+    return view('dashboard', ["user" => $user, "prilivi" => $prilivi_suma, "odlivi" => $odlivi_suma, "valuta" => $valuta]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -65,10 +67,22 @@ Route::post('/add-category', function(\Illuminate\Http\Request $request) {
 })->name('category.save');
 
 Route::middleware('auth')->get('/conversions', function() {
-
     $balance = Auth::user()->balance;
-    return view('conversions', ["balance" => $balance]);
+    $currency = Auth::user()->currency;
+    return view('conversions', ["balance" => $balance, "baseCurrency" => $currency]);
 
 })->name('conversions');
+
+Route::get('/setCurrency', function() {
+    return view('setCurrency');
+})->name('setCurrency');
+
+Route::post('/setCurrency', function(\Illuminate\Http\Request $request) {
+    $user = Auth::user();
+    $user->balance = $request->balance;
+    $user->currency = $request->currency;
+    $user->save();
+    return redirect()->route('dashboard');
+})->name('setCurrency');
 
 require __DIR__.'/auth.php';

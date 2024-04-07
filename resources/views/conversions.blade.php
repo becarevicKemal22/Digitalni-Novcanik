@@ -1,7 +1,22 @@
 <x-app-layout>
     <div class="px-24 py-12 flex flex-col items-center">
-        <h1 class="text-5xl text-normal flex items-center justify-center font-xl">Konverzije valuta</h1>
+        <h1 class="text-4xl text-normal flex items-center justify-center font-xl">Trenutno stanje na računu</h1>
+        <h4 class="text-lg text-normal mt-2 opacity-75">Odaberi valutu za prikaz trenutnog stanja.</h4>
 
+        <div class="py-6">
+            <div class="bg-white rounded-full overflow-hidden">
+                <select class="" name="balanceCurrency" id="balanceCurrency">
+                    <option value="BAM">BAM</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="RSD">RSD</option>
+                </select>
+                <input class="" type="number" name="balance" id="balance" disabled>
+            </div>
+        </div>
+
+        <h1 class="text-4xl text-normal flex items-center justify-center font-xl">Konverzije valuta</h1>
+        <h4 class="text-lg text-normal mt-2 opacity-75">Konvertuj valute u trenu!</h4>
         <div class="py-12 flex flex-col gap-6">
             <div class="bg-white rounded-full overflow-hidden">
                 <select class="" name="baseCurrency" id="baseCurrency">
@@ -38,7 +53,7 @@
     }
 </style>
 
-<script>
+<script async>
 
     const getCurrencies = () => {
         const base = document.getElementById('baseCurrency');
@@ -62,6 +77,20 @@
         });
         return result.data[target].value
     }
+
+    const balanceCurrency = document.getElementById('balanceCurrency');
+    const balanceDisplay = document.getElementById('balance');
+
+    const userBaseCurrency = {!! json_encode($baseCurrency) !!};
+    const userBalance = {!! json_encode($balance) !!};
+    fetchRate(userBaseCurrency, balanceCurrency.value).then(res => {
+        balanceDisplay.value = userBalance * res;
+    });
+
+    balanceCurrency.addEventListener("change", async () => {
+        const newRate = await fetchRate(userBaseCurrency, balanceCurrency.value);
+        balanceDisplay.value = userBalance * newRate;
+    })
 
     const kursDisplay = document.getElementById('kursDisplay');
     kursDisplay.textContent = "1 BAM = 1 BAM"

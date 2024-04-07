@@ -30,8 +30,10 @@ class TransactionController extends Controller
         }
         $transactions = $transactions->orderBy('created_at', 'desc')->get();
 
+        $valuta = $user->currency;
+
         $categories = Category::all();
-        return view('transactions', ['transactions'=>$transactions, 'categories' => $categories]);
+        return view('transactions', ['transactions'=>$transactions, 'categories' => $categories, 'currency' => $valuta]);
     }
 
     /**
