@@ -1,9 +1,12 @@
 <x-app-layout>
-    <div class="items-center justify-center text-2xl font-semibold text-normal">
+    <div class="flex flex-col items-center justify-center text-2xl font-semibold text-normal">
         <br>
         <h1 class="flex items-center justify-center whitespace-pre-line text-normal font-xl">digitalni novčanik</h1>
         <br>
         <h1 class="text-5xl text-normal flex items-center justify-center font-xl">Transakcije</h1>
+        <a class="bg-siva hover:bg-accent text-white p-3 rounded-lg text-base mt-8 -mb-6" href="{{route('cyclicalTransactions')}}">
+            Pregled cikličnih transakcija
+        </a>
         <br>
     </div>
     <br>
@@ -15,11 +18,11 @@
                 <div class="flex flex-col gap-2 text-white">
                     <div class="mt-4">
                         <label for="date" class="text-white mr-3">Datum transakcije</label>
-                        <input class="text-background" type="date" name="date" id="date">
+                        <input class="text-background rounded-md" type="date" name="date" id="date">
                     </div>
                     <div class="mt-4 flex justify-between items-center">
                         <label for="category">Kategorija transakcije</label>
-                        <select class="text-background" name="category" id="category">
+                        <select class="text-background rounded-md" name="category" id="category">
                             <option value="0">Sve</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->ime}}</option>
@@ -41,22 +44,33 @@
         </div>
         @foreach($transactions as $transaction)
             <div
-                class="mb-4 cursor-default rounded-2xl px-10 py-4 flex-col min-w-full items-center bg-siva shadow-lg hover:bg-accent hover:normal">
-                <div class="flex justify-between">
+                class="mb-4 cursor-default rounded-2xl px-10 py-4 flex justify-between min-w-full items-center bg-siva shadow-lg hover:bg-accent hover:normal">
+                <div class="flex-col justify-between">
                     <div class="flex gap-4 items-center">
                         <h3 class="text-normal group-hover:text-white text-2xl font-semibold">{{$transaction->name}}</h3>
                         <h4 class="text-gray-300">{{$transaction->date}}</h4>
                     </div>
+                    <div class="category mt-2 px-5 py-1.5 rounded-full max-w-fit"
+                         style="background-color: {{$transaction->category->boja}}">
+                        <h4>{{$transaction->category->ime}}</h4>
+                    </div>
+
+                </div>
+                <div class="flex gap-4 items-center">
                     @if($transaction->inflow)
                         <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} {{$currency}}</p>
                     @else
                         <p class="text-crvena group-hover:text-background text-2xl">-{{$transaction->amount}} {{$currency}}</p>
                     @endif
+                    <form method="POST" action="/transaction-delete/{{$transaction->id}}">
+                        @csrf
+                        {{ method_field('DELETE')  }}
+                        <button class="rounded-full text-white mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 fill-white"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                        </button>
+                    </form>
                 </div>
-                <div class="category mt-2 px-5 py-1.5 rounded-full max-w-fit"
-                     style="background-color: {{$transaction->category->boja}}">
-                    <h4>{{$transaction->category->ime}}</h4>
-                </div>
+
             </div>
         @endforeach
         @if(count($transactions) == 0)

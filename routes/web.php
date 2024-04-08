@@ -48,6 +48,8 @@ Route::controller(\App\Http\Controllers\TransactionController::class)->middlewar
     Route::get('/transactions', 'index')->name('transactions');
     Route::get('/transaction-create', 'create')->name('transaction.create');
     Route::post('/transaction-store', 'store')->name('transaction.store');
+    Route::delete('/transaction-delete/{id}', 'destroy')->name('transaction.delete');
+    Route::patch('/transaction-modify/{id}', 'update')->name('transaction.modify');
 });
 
 Route::controller(\App\Http\Controllers\CyclicalTransactionController::class)->middleware('auth')->group(function(){

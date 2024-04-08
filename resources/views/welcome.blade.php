@@ -9,7 +9,7 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet"/>
 
     <!-- Styles -->
     {{-- <style>
@@ -19,46 +19,47 @@
 </head>
 
 <body class="antialiased">
-    <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-background selection:text-white">
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                        in</a>
+<div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-background selection:text-white">
+    @if (Route::has('login'))
+        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+            @auth
+                <a href="{{ url('/dashboard') }}"
+                   class="font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                    in</a>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                    @endif
-                @endauth
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}"
+                       class="ml-4 font-semibold text-normal hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
+    <div class="grid grid-cols-1 pt-8 w-1/4 flex text-normal justify-center items-center">
+        <div class="flex text-normal justify-center items-center">
+            <h2 class="flex items-center justify-center text-xl">digitalni novčanik</h2>
+        </div>
+        <br>
+        <div class="grid grid-cols-1 pt-8 text-normal">
+            <div>
+                <h1 class="font-bold flex items-left justify-left space-x-2 text-5xl mb-2">Vaše <span
+                        class="text-accent font-bold flex items-center justify-center space-x-1 text-5xl ml-2"> finansije </span>
+                </h1>
             </div>
-        @endif
-<div class="grid grid-cols-1 pt-8 w-1/4 flex text-normal justify-center items-center">
-            <div class="flex text-normal justify-center items-center">
-                <h2 class="flex items-center justify-center text-xl">digitalni novčanik</h2>
-            </div>
-<br>
-            <div class="grid grid-cols-1 pt-8 flex text-normal justify-center items-center">
-                <div>
-                <h1 class="font-bold flex items-left justify-left space-x-2 text-5xl">Vaše <span class="text-accent font-bold flex items-center justify-center space-x-1 text-5xl"> finansije </span></h1>
-                </div>
-                <h1 class="font-bold flex items-left justify-left space-x-1 text-5xl">na jednom mjestu!</h1>
-<br>
-                <!-- pokusaj ubacivanja slike -->
-                <img src="{{ asset('images/welcome.jpg') }}" alt="welcome screenshot of the app image">
-            </div>
+            <h1 class="font-bold flex items-left justify-left space-x-1 text-5xl leading-tight">na jednom mjestu!</h1>
+            <br>
+            <a
+                href="{{route('register')}}"
+                class="bg-gradient-to-r from-accent to-accent-light flex items-center justify-center inline-flex items-center px-4 py-2 bg-accent border border-transparent rounded-2xl font-semibold">
+                KRENI!
+            </a>
+            <br>
+            <!-- pokusaj ubacivanja slike -->
+            <img src="{{ asset('welcome.png') }}" alt="welcome screenshot of the app">
+        </div>
 
-                <br>
-                <div
-                    class="flex items-center justify-center inline-flex items-center px-4 py-2 bg-accent border border-transparent rounded-md font-semibold">
-                    <x-primary-button class="flex items-center justify-center  w-1/5">
-                        {{ __('Kreni!') }}
-                    </x-primary-button>
-                </div>
 
     </div>
 </div>

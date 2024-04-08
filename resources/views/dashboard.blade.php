@@ -9,7 +9,7 @@
 
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl w-fit mx-auto sm:px-6 lg:px-8">
 {{--            Evo ti primjer kako se pristupa ovim poljima sto su ti proslijedjena za dashboard--}}
             <h1 class="text-5xl text-normal">Zdravo, {{$user->name}}!</h1> <br>
 

@@ -14,8 +14,9 @@ class CyclicalTransactionController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $currency = $user->currency;
         $transactions = $user->transactions()->whereNot('repetition_interval', 'Single')->with('category')->orderBy('created_at', 'desc')->get();
-        return view('cyclicalTransactions', ['transactions'=>$transactions]);
+        return view('cyclicalTransactions', ['transactions'=>$transactions, 'currency' => $currency]);
     }
 
     /**

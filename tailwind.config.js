@@ -21,6 +21,7 @@ export default {
         colors: {
             ...colors,
             'accent': '#7555D3', // ljubicasta
+            'accent-light': '#7e65cb',
             'normal': '#E1DDEE', // sivkasto bijela
             'background': '#211C28', // tamna za pozadinu
             'siva': '#37313F',
