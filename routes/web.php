@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -86,5 +88,9 @@ Route::post('/setCurrency', function(\Illuminate\Http\Request $request) {
     $user->save();
     return redirect()->route('dashboard');
 })->name('setCurrency');
+
+Route::get('/test', function(){
+
+});
 
 require __DIR__.'/auth.php';
