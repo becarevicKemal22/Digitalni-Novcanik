@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center whitespace-pre-line text-normal font-3xl">digitalni novčanik</h1>
     <br>
     <div class="text-5xl text-normal flex items-center justify-center ">
-        <h1>Napravi transakciju</h1>
+        <h1>Dodaj kategoriju</h1>
     </div>
     <br>
     <form method="POST" action="{{ route('category.add') }}">

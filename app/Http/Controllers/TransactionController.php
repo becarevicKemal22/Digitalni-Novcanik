@@ -103,6 +103,13 @@ class TransactionController extends Controller
     public function destroy(string $id)
     {
         $transaction = Transaction::findOrFail($id);
+        $user = Auth::user();
+        if($transaction->inflow){
+            $user->balance -= $transaction->amount;
+        }else{
+            $user->balance += $transaction->amount;
+        }
+        $user->save();
         $transaction->delete();
         return redirect()->route('transactions');
     }

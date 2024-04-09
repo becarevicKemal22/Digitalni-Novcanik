@@ -1,5 +1,5 @@
 <nav x-data="{ open: false }"
-     class="bg-siva w-min border-b-8 border-accent rounded-xl fixed top-full -translate-y-48 text-white left-1/2 -translate-x-1/2 ">
+     class="bg-siva w-min border-b-8 border-accent rounded-xl fixed top-full -translate-y-24 text-white left-1/2 -translate-x-1/2 ">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between gap-2">

@@ -24,6 +24,9 @@
             <main class="pt-12 bg-background">
                 {{ $slot }}
             </main>
+            <div class="py-36">
+
+            </div>
             @include('layouts.navigation')
 {{--            @if (isset($header))--}}
 {{--                <header class="bg-white shadow">--}}
