@@ -24,12 +24,76 @@
 
                 </div>
                 <div class="flex gap-3 items-center">
-                    @if($transaction->inflow)
-                        <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} {{$currency}}</p>
-                    @else
-                        <p class="text-crvena group-hover:text-background text-2xl">
-                            -{{$transaction->amount}} {{$currency}}</p>
-                    @endif
+
+                    {{--                 ZA MIJENJANJE KOLICINE --}}
+
+                    <button class="showChangeAmountForm rounded-full text-white bg-accent p-2 w-12 aspect-square text-xl"
+                            data-index="{{$loop->index}}"
+                    >
+                        $
+                    </button>
+                    <div id="changeAmountForm_{{$loop->index}}"
+                         class="changeAmountForm hidden p-4 text-white rounded-lg bg-siva">
+                        <form action="{{route('transaction.modify', $transaction->id)}}" method="POST">
+                            @csrf
+                            {{method_field('PATCH')}}
+                            <div class="">
+                                <x-input-label for="amount" :value="__('Novi iznos')"/>
+                                <x-text-input id="amount" name="amount" class="block mt-1 w-96 text-background" type="number"
+                                              amount="amount"
+                                              :value="old('amount')" required autofocus autocomplete="amount" min="0.00" step="1"/>
+                                <x-input-error :messages="$errors->get('amount')" class="mt-2"/>
+                            </div>
+                            <div class="mt-2 flex justify-around">
+                                <x-primary-button class="">
+                                    Spremi
+                                </x-primary-button>
+                                <x-danger-button>
+                                    <a class="" href="{{route('cyclicalTransactions')}}">
+                                        Otkaži
+                                    </a>
+                                </x-danger-button>
+                            </div>
+
+                        </form>
+                    </div>
+                    {{--                ZA MIJENJANJE INTERVALA PONAVLJANJA        --}}
+                    <button id="showChangeIntervalForm"
+                            data-index="{{$loop->index}}"
+                            class="showChangeIntervalForm rounded-full text-white bg-accent p-2 w-12 aspect-square text-xl">
+                        [ ]
+
+                    </button>
+                    <div id="changeIntervalForm_{{$loop->index}}"
+                         class="changeIntervalForm hidden p-4 text-white rounded-lg bg-siva">
+                        <form action="{{route('transaction.modify', $transaction->id)}}" method="POST">
+                            @csrf
+                            {{method_field('PATCH')}}
+                            <label for="repetition_interval">Novi interval ponavljanja: </label>
+                            <select class="ml-1 text-background rounded-md" name="repetition_interval"
+                                    id="repetition_interval">
+                                <option value="Single">Jednokratna</option>
+                                <option value="Daily">Dnevna</option>
+                                <option value="Monthly">Mjesečna</option>
+                                <option value="Yearly">Godišnja</option>
+                            </select>
+                            <br>
+                            <div class="mt-2 flex justify-around">
+                                <x-primary-button class="">
+                                    Spremi
+                                </x-primary-button>
+                                <x-danger-button>
+                                    <a class="" href="{{route('cyclicalTransactions')}}">
+                                        Otkaži
+                                    </a>
+                                </x-danger-button>
+                            </div>
+
+                        </form>
+                    </div>
+
+{{--                 ZA BRISANJE   --}}
+
                     <form method="POST" action="/transaction-delete/{{$transaction->id}}">
                         @csrf
                         {{ method_field('DELETE')  }}
@@ -41,40 +105,29 @@
                             </svg>
                         </button>
                     </form>
-                    <button id="showChangeIntervalForm"
-                            class="rounded-full text-white bg-accent p-2 w-12 aspect-square">
-                        <span class="text-xl">[ ]</span>
-                    </button>
-                    <button class="rounded-full text-white bg-accent p-2 w-12 aspect-square">
-                        <span class="text-xl">[ ]</span>
-                    </button>
+
+                    @if($transaction->inflow)
+                        <p class="text-zelena group-hover:text-background text-2xl">{{$transaction->amount}} {{$currency}}</p>
+                    @else
+                        <p class="text-crvena group-hover:text-background text-2xl">
+                            -{{$transaction->amount}} {{$currency}}</p>
+                    @endif
 
                 </div>
-                @endforeach
-                @if(count($transactions) == 0)
-                    <div class="w-full flex justify-center">
-                        <h2 class="text-white text-xl">Trenutno nemate spašenih cikličnih transakcija</h2>
-                    </div>
-                @endif
             </div>
+        @endforeach
+        @if(count($transactions) == 0)
+            <div class="w-full flex justify-center">
+                <h2 class="text-white text-xl">Trenutno nemate spašenih cikličnih transakcija</h2>
+            </div>
+        @endif
             <br>
     </div>
-    <div id="modalBackground"></div>
-    <div id="changeIntervalForm" class="p-4 text-white rounded-lg bg-siva">
-        <form action="{{route("transaction.modify", $transaction->id)}}">
-            {{method_field('PATCH')}}
-            <label for="interval">Interval ponavljanja</label>
-            <select class="text-background" name="interval" id="interval">
-                <option value="Single">Jednokratna</option>
-                <option value="Daily">Dnevna</option>
-                <option value="Monthly">Mjesečna</option>
-                <option value="Yearly">Godišnja</option>
-            </select>
-        </form>
-    </div>
+    <div id="modalBackground" class="hidden"></div>
+
 </x-app-layout>
 
-<script>
+<script defer>
     function getRGB(c) {
         return parseInt(c, 16) || c
     }
@@ -119,11 +172,20 @@
     FORM MODAL SHOWING LOGIC
      */
 
-    const showChangeIntervalFormButton = document.getElementById('showChangeIntervalForm');
-    const changeIntervalForm = document.getElementById('changeIntervalForm');
-    showChangeIntervalFormButton.addEventListener('click', () => {
-        changeIntervalForm.classList.toggle('hidden');
-    })
+    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('showChangeIntervalForm')) {
+                let index = event.target.getAttribute('data-index');
+                document.getElementById('changeIntervalForm_' + index).classList.remove('hidden');
+                document.getElementById('modalBackground').classList.remove('hidden');
+            }
+            if(event.target.classList.contains('showChangeAmountForm')) {
+                let index = event.target.getAttribute('data-index');
+                document.getElementById('changeAmountForm_' + index).classList.remove('hidden');
+                document.getElementById('modalBackground').classList.remove('hidden');
+            }
+        });
+    });
 </script>
 
 <style>
@@ -136,10 +198,12 @@
         background-color: black;
         opacity: 40%;
     }
-    #changeIntervalForm {
-        position: absolute;
+
+    .changeIntervalForm, .changeAmountForm {
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
+        z-index: 10000;
     }
 </style>

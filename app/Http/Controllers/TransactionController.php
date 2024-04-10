@@ -94,7 +94,15 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $transaction = Transaction::where('id', $id)->first();
+        if($request->input('repetition_interval')){
+            $transaction->repetition_interval = $request->repetition_interval;
+        }
+        if($request->input('amount')){
+            $transaction->amount = $request->amount;
+        }
+        $transaction->save();
+        return redirect()->route('transactions');
     }
 
     /**

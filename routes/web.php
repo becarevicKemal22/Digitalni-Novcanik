@@ -89,8 +89,4 @@ Route::post('/setCurrency', function(\Illuminate\Http\Request $request) {
     return redirect()->route('dashboard');
 })->name('setCurrency');
 
-Route::get('/test', function(){
-
-});
-
 require __DIR__.'/auth.php';
