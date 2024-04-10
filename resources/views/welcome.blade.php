@@ -42,7 +42,7 @@
             <h2 class="flex items-center justify-center text-xl">digitalni novčanik</h2>
         </div>
         <br>
-        <div class="grid grid-cols-1 pt-8 text-normal">
+        <div class="grid grid-cols-1 justify-items-center pt-8 text-normal">
             <div>
                 <h1 class="font-bold flex items-left justify-left space-x-2 text-5xl mb-2">Vaše <span
                         class="text-accent font-bold flex items-center justify-center space-x-1 text-5xl ml-2"> finansije </span>
@@ -52,7 +52,7 @@
             <br>
             <a
                 href="{{route('register')}}"
-                class="bg-gradient-to-r from-accent to-accent-light flex items-center justify-center inline-flex items-center px-4 py-2 bg-accent border border-transparent rounded-2xl font-semibold">
+                class="bg-gradient-to-r from-accent to-accent-light flex items-center justify-center inline-flex items-center px-20 py-2 bg-accent border border-transparent rounded-2xl font-semibold max-w-fit">
                 KRENI!
             </a>
             <br>

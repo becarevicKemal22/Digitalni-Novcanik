@@ -26,7 +26,44 @@
                 <div class="relative">
                     <h1 class="text-crvena text-4xl ml-14">{{$odlivi}} {{$valuta}}</h1>
                 </div>
+                <div class="mt-12">
+                    <canvas id="myChart" style="width:100%;max-width:450px"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+<script defer>
+
+    const prilivi_data = {!! json_encode($prilivi_data) !!};
+    const odlivi_data = {!! json_encode($odlivi_data) !!};
+
+    const xValues = [];
+    for(let i = 1; i <= prilivi_data.length; i++){
+        xValues[i - 1] = i;
+    }
+
+    new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: prilivi_data,
+                borderColor: "#7555D3",
+                fill: false
+            },{
+                data: odlivi_data,
+                borderColor: "#7e65cb",
+                fill: false
+            }]
+        },
+        options: {
+            legend: {display: false}
+        }
+    });
+</script>

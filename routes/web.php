@@ -26,18 +26,47 @@ Route::get('/dashboard', function () {
     $user = Auth::user();
     $prilivi = $user->transactions()->where('inflow', "1")->get();
     $prilivi_suma = 0;
-    foreach ($prilivi as $priliv){
+    $prilivi_data = [];
+    if(count($prilivi) > 0){
+        $prilivi_data[0] = $prilivi[0]->amount;
+    }
+    foreach ($prilivi as $idx => $priliv){
+        if($idx >= 1){
+            $prilivi_data[$idx] = $prilivi_data[$idx - 1] + $priliv->amount;
+        }
         $prilivi_suma += $priliv->amount;
     }
     $odlivi = $user->transactions()->where('inflow', "0")->get();
     $odlivi_suma = 0;
-    foreach($odlivi as $odliv){
+    $odlivi_data = [];
+    if(count($odlivi) > 0){
+        $odlivi_data[0] = $odlivi[0]->amount;
+    }
+    foreach($odlivi as $idx => $odliv){
+        if($idx >= 1){
+            $odlivi_data[$idx] = $prilivi_data[$idx - 1] + $odliv->amount;
+        }
         $odlivi_suma += $odliv->amount;
     }
 
     $valuta = $user->currency;
 
-    return view('dashboard', ["user" => $user, "prilivi" => $prilivi_suma, "odlivi" => $odlivi_suma, "valuta" => $valuta]);
+    if(count($odlivi_data) > count($prilivi_data)){
+        $razlika = count($odlivi_data) - count($prilivi_data);
+        $last = $prilivi_data[count($prilivi_data) - 1];
+        for($i = 0; $i < $razlika; $i++){
+            array_push($prilivi_data, $last);
+        }
+    }
+    else if(count($prilivi_data) > count($odlivi_data)){
+        $razlika = count($prilivi_data) - count($odlivi_data);
+        $last = $odlivi_data[count($odlivi_data) - 1];
+        for($i = 0; $i < $razlika; $i++){
+            array_push($odlivi_data, $last);
+        }
+    }
+
+    return view('dashboard', ["user" => $user, "prilivi" => $prilivi_suma, "odlivi" => $odlivi_suma, "valuta" => $valuta, "prilivi_data" => $prilivi_data, "odlivi_data" => $odlivi_data]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -62,7 +91,7 @@ Route::get('/add-category', function() {
     return view('add-category');
 })->name('category.add');
 
-Route::post('/add-category', function(\Illuminate\Http\Request $request) {
+Route::post('/add-categor', function(\Illuminate\Http\Request $request) {
     \App\Models\Category::create([
         "ime" => $request->name,
         "boja" => $request->color,
