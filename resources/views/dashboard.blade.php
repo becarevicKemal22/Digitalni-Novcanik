@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="-py-12">
+    <div class="-py-12" id="glavni">
         <div class="max-w-7xl w-fit mx-auto sm:px-6 lg:px-8">
             <div class="relative overflow-hidden">
                 <img src="{{asset('wave-haikei.png')}}" alt="" class="w-[470px]">

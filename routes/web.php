@@ -91,7 +91,7 @@ Route::get('/add-category', function() {
     return view('add-category');
 })->name('category.add');
 
-Route::post('/add-categor', function(\Illuminate\Http\Request $request) {
+Route::post('/add-category', function(\Illuminate\Http\Request $request) {
     \App\Models\Category::create([
         "ime" => $request->name,
         "boja" => $request->color,

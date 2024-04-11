@@ -56,7 +56,6 @@
                 KRENI!
             </a>
             <br>
-            <!-- pokusaj ubacivanja slike -->
             <img src="{{ asset('welcome.png') }}" alt="welcome screenshot of the app">
         </div>
 
